@@ -1,0 +1,46 @@
+{
+  "name": "binance-watch",
+  "version": "1.0.0",
+  "description": "Watch a group of coins",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "serve": "browser-refresh index.js",
+    "pretest": "eslint 'test/**/*.spec.js'",
+    "test": "mocha 'test/**/*.js'   --exit || true",
+    "testdebug": "mocha 'test/**/*.js' --debug --inspect  --exit || true",
+    "start": "node index.js",
+    "lint": "eslint  *.js 'js/**/*.js' --exit || true"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules/*",
+      ".git"
+    ],
+    "watch": [
+      "js/**/*",
+      "*.js",
+      "test/**/*.js"
+    ],
+    "ext": "js json",
+    "exec": "npm run lint && npm start && npm run serve"
+  },
+  "author": "itzco",
+  "license": "ISC",
+  "dependencies": {
+    "consolidate": "^0.16.0",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "jstat": "^1.9.4",
+    "mathjs": "^9.2.0",
+    "moment": "^2.29.1",
+    "node-binance-api": "^0.12.5",
+    "tulind": "^0.8.18"
+  },
+  "devDependencies": {
+    "eslint": "^7.21.0",
+    "nodemon": "^2.0.7"
+  }
+}

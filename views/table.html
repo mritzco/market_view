@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script src="sort-table.js"></script>
+    <link rel="stylesheet" href="sort-table.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <h1>Symbols</h1>
+    <table class="js-sort-table" id="symbols">
+      <tr>
+        <th class="js-sort-number">Symbol</th>
+        <th class="js-sort-number">low</th>
+        <th class="js-sort-number">high</th>
+        <th class="js-sort-number">open</th>
+        <th class="js-sort-number">close</th>
+        <th class="js-sort-number">all</th>
+        <th class="js-sort-number">24h</th>
+        <th class="js-sort-number">8c</th>
+        <th class="js-sort-number">4c</th>
+        <th class="js-sort-number">2c</th>
+
+        <th>-</th>
+
+        <th class="js-sort-number">Vol 8c</th>
+        <th class="js-sort-number">Vol 4c</th>
+        <th class="js-sort-number">Vol 2c</th>
+      </tr>
+      <% info.forEach(function (i){ %>
+        <tr>
+          <td><a href="/<%= i.symbol%>" /><%= i.symbol%></a></td>
+          <td><%= i.stats.low%></td>
+          <td><%= i.stats.high%></td>
+          <td><%= i.stats.open%></td>
+          <td><%= i.stats.close%></td>
+          <td
+          <% if (i.indicators.changeall.change < 0) { %> class="red" <% } %>
+          <% if (i.indicators.changeall.change > 0) { %> class="green" <% } %>
+          ><%= i.indicators.changeall.change %>%</td>
+          <td
+          <% if (i.indicators.change24h.change < 0) { %> class="red" <% } %>
+          <% if (i.indicators.change24h.change > 0) { %> class="green" <% } %>
+          ><%= i.indicators.change24h.change %>%</td>
+          <td
+          <% if (i.indicators.change8c.change < 0) { %> class="red" <% } %>
+          <% if (i.indicators.change8c.change > 0) { %> class="green" <% } %>
+          ><%= i.indicators.change8c.change %>%</td>
+          <td
+          <% if (i.indicators.change4c.change < 0) { %> class="red" <% } %>
+          <% if (i.indicators.change4c.change > 0) { %> class="green" <% } %>
+          ><%= i.indicators.change4c.change %>%</td>
+          <td
+          <% if (i.indicators.change2c.change < 0) { %> class="red" <% } %>
+          <% if (i.indicators.change2c.change > 0) { %> class="green" <% } %>
+          ><%= i.indicators.change2c.change %>%</td>
+          <td></td>
+          <td
+          <% if (i.indicators.vol8c.change < 0) { %> class="red" <% } %>
+          <% if (i.indicators.vol8c.change > 0) { %> class="green" <% } %>
+          ><%= i.indicators.vol8c.change %>%</td>
+          <td
+          <% if (i.indicators.vol4c.change < 0) { %> class="red" <% } %>
+          <% if (i.indicators.vol4c.change > 0) { %> class="green" <% } %>
+          ><%= i.indicators.vol4c.change %>%</td>
+          <td
+          <% if (i.indicators.vol2c.change < 0) { %> class="red" <% } %>
+          <% if (i.indicators.vol2c.change > 0) { %> class="green" <% } %>
+          ><%= i.indicators.vol2c.change %>%</td>
+
+        </tr>
+        <% })%>
+      </table>
+
+  </body>
+</html>
