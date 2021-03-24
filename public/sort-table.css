@@ -34,7 +34,7 @@ body {
 table {
   font-family: "Roboto", sans-serif;
   border: 1px solid #ccc;
-  width: 100%;
+  
 }
 th {
   background: #333;
@@ -45,7 +45,7 @@ th {
 td,
 th {
   border: 1px solid #ccc;
-  padding: 9px 14px;
+  padding: 10px 14px;
 }
 .green {
   color: #189c18;
@@ -77,5 +77,5 @@ table td {
 /* Inline #3 | http://localhost:5000/all */
 
 table.js-sort-table tr:nth-child(2n) {
-  background: #ededee;
+  background: #efffef;
 }

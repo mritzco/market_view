@@ -99,7 +99,7 @@
     </tr>
     <% info.forEach(function (i){ %>
       <tr>
-        <td  class="left"><a href="/<%= i.symbol%>" class="strong"/><%= i.symbol%></a></td>
+        <td  class="left"><a href="<%= i.symbol%>" class="strong"/><%= i.symbol%></a></td>
         <td><%= i.stats.close%></td>
         <td
         <% if (i.indicators.changeall.change < 0) { %> class="red" <% } %>
