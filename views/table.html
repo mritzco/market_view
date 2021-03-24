@@ -9,8 +9,8 @@
   </head>
   <body>
     <h1>Symbols<br /><small><%= time %></small></h1>
-    <table class="js-sort-table" id="symbols">
-      <tr>
+    <table  id="top">
+      <!-- <tr>
         <th>Symbol</th>
         <th class="js-sort-number">price</th>
         <th class="js-sort-number">all</th>
@@ -20,13 +20,13 @@
         <th class="js-sort-number">2c</th>
         <th class="js-sort-number">1c</th>
 
-        <th>-</th>
+        <th></th>
 
         <th class="js-sort-number">Vol 8c</th>
         <th class="js-sort-number">Vol 4c</th>
         <th class="js-sort-number">Vol 2c</th>
         <th class="js-sort-number">Vol 1c</th>
-      </tr>
+      </tr> -->
       <% top.forEach(function (i){ %>
         <tr>
           <td class="left"><a href="/<%= i.symbol%>" class="strong"/><%= i.symbol%></a></td>
@@ -90,7 +90,7 @@
       <th class="js-sort-number">2c</th>
       <th class="js-sort-number">1c</th>
 
-      <th>-</th>
+      <th></th>
 
       <th class="js-sort-number">Vol 8c</th>
       <th class="js-sort-number">Vol 4c</th>
