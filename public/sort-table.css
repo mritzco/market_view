@@ -34,6 +34,7 @@ body {
 table {
   font-family: "Roboto", sans-serif;
   border: 1px solid #ccc;
+  width: 90%;
 }
 th {
   background: #333;
@@ -59,4 +60,14 @@ td a {
 .strong {
   font-weight: bolder;
   color: #000;
+}
+h1 small {
+  font-size: 14px;
+}
+
+table td.left {
+  text-align: left;
+}
+table td {
+  text-align: right;
 }

@@ -8,13 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
   </head>
   <body>
-    <h1>Symbols</h1>
+    <h1>Symbols<br /><small><%= time %></small></h1>
     <table class="js-sort-table" id="symbols">
       <tr>
         <th>Symbol</th>
-        <!-- <th class="js-sort-number">low</th>
-        <th class="js-sort-number">high</th>
-        <th class="js-sort-number">open</th> -->
         <th class="js-sort-number">price</th>
         <th class="js-sort-number">all</th>
         <th class="js-sort-number">24h</th>
@@ -30,12 +27,9 @@
         <th class="js-sort-number">Vol 2c</th>
         <th class="js-sort-number">Vol 1c</th>
       </tr>
-      <% info.forEach(function (i){ %>
+      <% top.forEach(function (i){ %>
         <tr>
-          <td><a href="/<%= i.symbol%>" class="strong"/><%= i.symbol%></a></td>
-          <!-- <td><%= i.stats.low%></td>
-          <td><%= i.stats.high%></td>
-          <td><%= i.stats.open%></td> -->
+          <td class="left"><a href="/<%= i.symbol%>" class="strong"/><%= i.symbol%></a></td>
           <td><%= i.stats.close%></td>
           <td
           <% if (i.indicators.changeall.change < 0) { %> class="red" <% } %>
@@ -83,6 +77,77 @@
         </tr>
         <% })%>
       </table>
+  <!-- info -->
+
+  <table class="js-sort-table" id="symbols">
+    <tr>
+      <th>Symbol</th>
+      <th class="js-sort-number">price</th>
+      <th class="js-sort-number">all</th>
+      <th class="js-sort-number">24h</th>
+      <th class="js-sort-number">8c</th>
+      <th class="js-sort-number">4c</th>
+      <th class="js-sort-number">2c</th>
+      <th class="js-sort-number">1c</th>
+
+      <th>-</th>
+
+      <th class="js-sort-number">Vol 8c</th>
+      <th class="js-sort-number">Vol 4c</th>
+      <th class="js-sort-number">Vol 2c</th>
+      <th class="js-sort-number">Vol 1c</th>
+    </tr>
+    <% info.forEach(function (i){ %>
+      <tr>
+        <td  class="left"><a href="/<%= i.symbol%>" class="strong"/><%= i.symbol%></a></td>
+        <td><%= i.stats.close%></td>
+        <td
+        <% if (i.indicators.changeall.change < 0) { %> class="red" <% } %>
+        <% if (i.indicators.changeall.change > 0) { %> class="green" <% } %>
+        ><%= i.indicators.changeall.change %>%</td>
+        <td
+        <% if (i.indicators.change24h.change < 0) { %> class="red" <% } %>
+        <% if (i.indicators.change24h.change > 0) { %> class="green" <% } %>
+        ><%= i.indicators.change24h.change %>%</td>
+        <td
+        <% if (i.indicators.change8c.change < 0) { %> class="red" <% } %>
+        <% if (i.indicators.change8c.change > 0) { %> class="green" <% } %>
+        ><%= i.indicators.change8c.change %>%</td>
+        <td
+        <% if (i.indicators.change4c.change < 0) { %> class="red" <% } %>
+        <% if (i.indicators.change4c.change > 0) { %> class="green" <% } %>
+        ><%= i.indicators.change4c.change %>%</td>
+        <td
+        <% if (i.indicators.change2c.change < 0) { %> class="red" <% } %>
+        <% if (i.indicators.change2c.change > 0) { %> class="green" <% } %>
+        ><%= i.indicators.change2c.change %>%</td>
+
+        <td
+        <% if (i.indicators.change1c.change < 0) { %> class="red" <% } %>
+        <% if (i.indicators.change1c.change > 0) { %> class="green" <% } %>
+        ><%= i.indicators.change1c.change %>%</td>
+        <td></td>
+        <td
+        <% if (i.indicators.vol8c.change < 0) { %> class="red" <% } %>
+        <% if (i.indicators.vol8c.change > 0) { %> class="green" <% } %>
+        ><%= i.indicators.vol8c.change %>%</td>
+        <td
+        <% if (i.indicators.vol4c.change < 0) { %> class="red" <% } %>
+        <% if (i.indicators.vol4c.change > 0) { %> class="green" <% } %>
+        ><%= i.indicators.vol4c.change %>%</td>
+        <td
+        <% if (i.indicators.vol2c.change < 0) { %> class="red" <% } %>
+        <% if (i.indicators.vol2c.change > 0) { %> class="green" <% } %>
+        ><%= i.indicators.vol2c.change %>%</td>
+        <td
+        <% if (i.indicators.vol1c.change < 0) { %> class="red" <% } %>
+        <% if (i.indicators.vol1c.change > 0) { %> class="green" <% } %>
+        ><%= i.indicators.vol1c.change %>%</td>
+
+      </tr>
+      <% })%>
+    </table>
+
 
   </body>
 </html>
