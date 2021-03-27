@@ -3,12 +3,17 @@
   <head>
     <meta charset="utf-8">
     <script src="sort-table.js"></script>
+    <script src="linkshack.js"></script>
     <link rel="stylesheet" href="sort-table.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
   </head>
   <body>
-    <h1>Symbols<br /><small><%= time %></small></h1>
+    <h1>Futures<br /><small>
+      <a id="chartslink" href="#">Charts top 4</a>
+      <%= time %>
+
+    </small></h1>
     <table  id="top">
       <!-- <tr>
         <th>Symbol</th>
@@ -147,6 +152,7 @@
       </tr>
       <% })%>
     </table>
+
 
 
   </body>

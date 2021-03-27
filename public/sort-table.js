@@ -94,6 +94,9 @@ function sortTable(Table, col, dir) {
     for (i = 0; i < rows.length; i++) {
         TBody.appendChild(rows[i]);
     }
+    // Hack to link
+    linktop(rows.slice(0, 4).map(rw => sortTable.string(rw.cells[0])));
+
 }
 
 /**
