@@ -1,9 +1,9 @@
 module.exports = {
   symbols: [
+    "BCH",
     "AXS",
     "ENJ",
     "SAND",
-    "YFI",
     "BAL",
     "LUNA",
     "LINK",
@@ -28,7 +28,16 @@ module.exports = {
     "ALPHA",
     "SUSHI",
     "RSR",
-    "THETA"
+    "THETA",
+    "COMP",
+    "CELR",
+    "HOT",
+    "STMX",
+    "DENT",
+    "AKRO",
+    "MKR",
+    "FTM",
+    "ALICE"
   ],
   urls: {
     "24": "https://api.binance.com/api/v3/ticker/24hr",
