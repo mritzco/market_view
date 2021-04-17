@@ -19,84 +19,101 @@
  * @returns void
  */
 function sortTable(Table, col, dir) {
-    var sortClass, i;
+  var sortClass, i;
 
-    // get previous sort column
-    sortTable.sortCol = -1;
-    sortClass = Table.className.match(/js-sort-\d+/);
-    if (null != sortClass) {
-        sortTable.sortCol = sortClass[0].replace(/js-sort-/, '');
-        Table.className = Table.className.replace(new RegExp(' ?' + sortClass[0] + '\\b'), '');
-    }
-    // If sort column was not passed, use previous
-    if ('undefined' === typeof col) {
-        col = sortTable.sortCol;
-    }
+  // get previous sort column
+  sortTable.sortCol = -1;
+  sortClass = Table.className.match(/js-sort-\d+/);
+  if (null != sortClass) {
+    sortTable.sortCol = sortClass[0].replace(/js-sort-/, "");
+    Table.className = Table.className.replace(
+      new RegExp(" ?" + sortClass[0] + "\\b"),
+      ""
+    );
+  }
+  // If sort column was not passed, use previous
+  if ("undefined" === typeof col) {
+    col = sortTable.sortCol;
+  }
 
-    if ('undefined' !== typeof dir) {
-        // Accept -1 or 'desc' for descending.  All else is ascending
-        sortTable.sortDir = dir == -1 || dir == 'desc' ? -1 : 1;
+  if ("undefined" !== typeof dir) {
+    // Accept -1 or 'desc' for descending.  All else is ascending
+    sortTable.sortDir = dir == -1 || dir == "desc" ? -1 : 1;
+  } else {
+    // sort direction was not passed, use opposite of previous
+    sortClass = Table.className.match(/js-sort-(a|de)sc/);
+    if (null != sortClass && sortTable.sortCol == col) {
+      sortTable.sortDir = "js-sort-asc" == sortClass[0] ? -1 : 1;
     } else {
-        // sort direction was not passed, use opposite of previous
-        sortClass = Table.className.match(/js-sort-(a|de)sc/);
-        if (null != sortClass && sortTable.sortCol == col) {
-            sortTable.sortDir = 'js-sort-asc' == sortClass[0] ? -1 : 1;
-        } else {
-            sortTable.sortDir = 1;
-        }
+      sortTable.sortDir = 1;
     }
-    Table.className = Table.className.replace(/ ?js-sort-(a|de)sc/g, '');
+  }
+  Table.className = Table.className.replace(/ ?js-sort-(a|de)sc/g, "");
 
-    // update sort column
-    Table.className += ' js-sort-' + col;
-    sortTable.sortCol = col;
+  // update sort column
+  Table.className += " js-sort-" + col;
+  sortTable.sortCol = col;
 
-    // update sort direction
-    Table.className += ' js-sort-' + (sortTable.sortDir == -1 ? 'desc' : 'asc');
+  // update sort direction
+  Table.className += " js-sort-" + (sortTable.sortDir == -1 ? "desc" : "asc");
 
-    // get sort type
-    if (col < Table.tHead.rows[Table.tHead.rows.length - 1].cells.length) {
-        sortClass = Table.tHead.rows[Table.tHead.rows.length - 1].cells[col].className.match(/js-sort-[-\w]+/);
+  // get sort type
+  if (col < Table.tHead.rows[Table.tHead.rows.length - 1].cells.length) {
+    sortClass = Table.tHead.rows[Table.tHead.rows.length - 1].cells[
+      col
+    ].className.match(/js-sort-[-\w]+/);
+  }
+  // Improved support for colspan'd headers
+  for (
+    i = 0;
+    i < Table.tHead.rows[Table.tHead.rows.length - 1].cells.length;
+    i++
+  ) {
+    if (
+      col ==
+      Table.tHead.rows[Table.tHead.rows.length - 1].cells[i].getAttribute(
+        "data-js-sort-colNum"
+      )
+    ) {
+      sortClass = Table.tHead.rows[Table.tHead.rows.length - 1].cells[
+        i
+      ].className.match(/js-sort-[-\w]+/);
     }
-    // Improved support for colspan'd headers
-    for (i = 0; i < Table.tHead.rows[Table.tHead.rows.length - 1].cells.length; i++) {
-        if (col == Table.tHead.rows[Table.tHead.rows.length - 1].cells[i].getAttribute('data-js-sort-colNum')) {
-            sortClass = Table.tHead.rows[Table.tHead.rows.length - 1].cells[i].className.match(/js-sort-[-\w]+/);
-        }
-    }
-    if (null != sortClass) {
-        sortTable.sortFunc = sortClass[0].replace(/js-sort-/, '');
-    } else {
-        sortTable.sortFunc = 'string';
-    }
-    // Set the headers for the active column to have the decorative class
-    Table.querySelectorAll('.js-sort-active').forEach(function(Node) {
-        Node.className = Node.className.replace(/ ?js-sort-active\b/, '');
-    });
-    Table.querySelectorAll('[data-js-sort-colNum="' + col + '"]:not(:empty)').forEach(function(Node) {
-        Node.className += ' js-sort-active';
-    });
+  }
+  if (null != sortClass) {
+    sortTable.sortFunc = sortClass[0].replace(/js-sort-/, "");
+  } else {
+    sortTable.sortFunc = "string";
+  }
+  // Set the headers for the active column to have the decorative class
+  Table.querySelectorAll(".js-sort-active").forEach(function(Node) {
+    Node.className = Node.className.replace(/ ?js-sort-active\b/, "");
+  });
+  Table.querySelectorAll(
+    '[data-js-sort-colNum="' + col + '"]:not(:empty)'
+  ).forEach(function(Node) {
+    Node.className += " js-sort-active";
+  });
 
-    // sort!
-    var rows = [],
-        TBody = Table.tBodies[0];
+  // sort!
+  var rows = [],
+    TBody = Table.tBodies[0];
 
-    for (i = 0; i < TBody.rows.length; i++) {
-        rows[i] = TBody.rows[i];
-    }
-    if ('none' != sortTable.sortFunc) {
-        rows.sort(sortTable.compareRow);
-    }
+  for (i = 0; i < TBody.rows.length; i++) {
+    rows[i] = TBody.rows[i];
+  }
+  if ("none" != sortTable.sortFunc) {
+    rows.sort(sortTable.compareRow);
+  }
 
-    while (TBody.firstChild) {
-        TBody.removeChild(TBody.firstChild);
-    }
-    for (i = 0; i < rows.length; i++) {
-        TBody.appendChild(rows[i]);
-    }
-    // Hack to link
-    linktop(rows.slice(0, 4).map(rw => sortTable.string(rw.cells[0])));
-
+  while (TBody.firstChild) {
+    TBody.removeChild(TBody.firstChild);
+  }
+  for (i = 0; i < rows.length; i++) {
+    TBody.appendChild(rows[i]);
+  }
+  // Hack to link
+  linktop(rows.slice(0, 6).map(rw => sortTable.string(rw.cells[0])));
 }
 
 /**
@@ -107,14 +124,27 @@ function sortTable(Table, col, dir) {
  * @returns {number} 1 if RowA is greater, -1 if RowB, 0 if equal
  */
 sortTable.compareRow = function(RowA, RowB) {
-    var valA, valB;
-    if ('function' != typeof sortTable[sortTable.sortFunc]) {
-        sortTable.sortFunc = 'string';
-    }
-    valA = sortTable[sortTable.sortFunc](RowA.cells[sortTable.sortCol]);
-    valB = sortTable[sortTable.sortFunc](RowB.cells[sortTable.sortCol]);
+  var valA, valB;
+  if ("function" != typeof sortTable[sortTable.sortFunc]) {
+    sortTable.sortFunc = "string";
+  }
+  valA = sortTable[sortTable.sortFunc](RowA.cells[sortTable.sortCol]);
+  valB = sortTable[sortTable.sortFunc](RowB.cells[sortTable.sortCol]);
 
-    return valA == valB ? 0 : sortTable.sortDir * (valA > valB ? 1 : -1);
+  // hack #2, force eth and btc at top. this should be in a different place
+  lblA = sortTable["string"](RowA.cells[0]);
+  lblB = sortTable["string"](RowB.cells[0]);
+  if (lblA === "btc" && lblB === "eth") {
+    // console.log('sorting btc -> eth');
+    return -1;
+  }
+  if (lblA === "btc" || lblA === "eth") {
+    // console.log('%s - %s', lblA, lblB);
+    return -1;
+  }
+  // console.log(valA == valB ? 0 : sortTable.sortDir * (valA > valB ? 1 : -1));
+
+  return valA == valB ? 0 : sortTable.sortDir * (valA > valB ? 1 : -1);
 };
 
 /**
@@ -123,7 +153,7 @@ sortTable.compareRow = function(RowA, RowB) {
  * @returns {string}
  */
 sortTable.stripTags = function(html) {
-    return html.replace(/<\/?[a-z][a-z0-9]*\b[^>]*>/gi, '');
+  return html.replace(/<\/?[a-z][a-z0-9]*\b[^>]*>/gi, "");
 };
 
 /**
@@ -134,13 +164,13 @@ sortTable.stripTags = function(html) {
  * @returns {Number}
  */
 sortTable.date = function(Cell) {
-    // If okDate library is available, Use it for advanced Date processing
-    if (typeof okDate !== 'undefined') {
-        var kDate = okDate(sortTable.stripTags(Cell.innerHTML));
-        return kDate ? kDate.getTime() : 0;
-    } else {
-        return (new Date(sortTable.stripTags(Cell.innerHTML))).getTime() || 0;
-    }
+  // If okDate library is available, Use it for advanced Date processing
+  if (typeof okDate !== "undefined") {
+    var kDate = okDate(sortTable.stripTags(Cell.innerHTML));
+    return kDate ? kDate.getTime() : 0;
+  } else {
+    return new Date(sortTable.stripTags(Cell.innerHTML)).getTime() || 0;
+  }
 };
 
 /**
@@ -151,7 +181,7 @@ sortTable.date = function(Cell) {
  * @returns {Number}
  */
 sortTable.number = function(Cell) {
-    return Number(sortTable.stripTags(Cell.innerHTML).replace(/[^-\d.]/g, ''));
+  return Number(sortTable.stripTags(Cell.innerHTML).replace(/[^-\d.]/g, ""));
 };
 
 /**
@@ -162,7 +192,7 @@ sortTable.number = function(Cell) {
  * @returns {String}
  */
 sortTable.string = function(Cell) {
-    return sortTable.stripTags(Cell.innerHTML).toLowerCase();
+  return sortTable.stripTags(Cell.innerHTML).toLowerCase();
 };
 
 /**
@@ -172,7 +202,7 @@ sortTable.string = function(Cell) {
  * @returns {String}
  */
 sortTable.raw = function(Cell) {
-    return Cell.innerHTML;
+  return Cell.innerHTML;
 };
 
 /**
@@ -183,7 +213,11 @@ sortTable.raw = function(Cell) {
  * @returns {String}
  */
 sortTable.last = function(Cell) {
-    return sortTable.stripTags(Cell.innerHTML).split(' ').pop().toLowerCase();
+  return sortTable
+    .stripTags(Cell.innerHTML)
+    .split(" ")
+    .pop()
+    .toLowerCase();
 };
 
 /**
@@ -194,15 +228,16 @@ sortTable.last = function(Cell) {
  * @returns {String}
  */
 sortTable.input = function(Cell) {
-    for (var i = 0; i < Cell.children.length; i++) {
-        if ('object' == typeof Cell.children[i]
-            && 'undefined' != typeof Cell.children[i].value
-        ) {
-            return Cell.children[i].value.toLowerCase();
-        }
+  for (var i = 0; i < Cell.children.length; i++) {
+    if (
+      "object" == typeof Cell.children[i] &&
+      "undefined" != typeof Cell.children[i].value
+    ) {
+      return Cell.children[i].value.toLowerCase();
     }
+  }
 
-    return sortTable.string(Cell);
+  return sortTable.string(Cell);
 };
 
 /**
@@ -212,7 +247,7 @@ sortTable.input = function(Cell) {
  * @returns null
  */
 sortTable.none = function(Cell) {
-    return null;
+  return null;
 };
 
 /**
@@ -223,9 +258,9 @@ sortTable.none = function(Cell) {
  * @returns {Function} Click Handler
  */
 sortTable.getClickHandler = function(Table, col) {
-    return function() {
-        sortTable(Table, col);
-    };
+  return function() {
+    sortTable(Table, col);
+  };
 };
 
 /**
@@ -234,69 +269,87 @@ sortTable.getClickHandler = function(Table, col) {
  *  first row
  */
 sortTable.init = function() {
-    var THead, Tables, Handler;
-    if (document.querySelectorAll) {
-        Tables = document.querySelectorAll('table.js-sort-table');
+  var THead, Tables, Handler;
+  if (document.querySelectorAll) {
+    Tables = document.querySelectorAll("table.js-sort-table");
+  } else {
+    Tables = document.getElementsByTagName("table");
+  }
+
+  for (var i = 0; i < Tables.length; i++) {
+    // Because IE<8 doesn't support querySelectorAll, skip unclassed tables
+    if (
+      !document.querySelectorAll &&
+      null === Tables[i].className.match(/\bjs-sort-table\b/)
+    ) {
+      continue;
+    }
+
+    // Prevent repeat processing
+    if (Tables[i].attributes["data-js-sort-table"]) {
+      continue;
+    }
+
+    // Ensure table has a tHead element
+    if (!Tables[i].tHead) {
+      THead = document.createElement("thead");
+      THead.appendChild(Tables[i].rows[0]);
+      Tables[i].insertBefore(THead, Tables[i].children[0]);
     } else {
-        Tables = document.getElementsByTagName('table');
+      THead = Tables[i].tHead;
     }
 
-    for (var i = 0; i < Tables.length; i++) {
-        // Because IE<8 doesn't support querySelectorAll, skip unclassed tables
-        if (!document.querySelectorAll && null === Tables[i].className.match(/\bjs-sort-table\b/)) {
-            continue;
+    // Attach click events to table header
+    for (var rowNum = 0; rowNum < THead.rows.length; rowNum++) {
+      for (
+        var cellNum = 0, colNum = 0;
+        cellNum < THead.rows[rowNum].cells.length;
+        cellNum++
+      ) {
+        // Skip headers marked "js-sort-none"
+        if (
+          THead.rows[rowNum].cells[cellNum].className.match(/\bjs-sort-none\b/)
+        ) {
+          continue;
         }
-
-        // Prevent repeat processing
-        if (Tables[i].attributes['data-js-sort-table']) {
-            continue;
-        }
-
-        // Ensure table has a tHead element
-        if (!Tables[i].tHead) {
-            THead = document.createElement('thead');
-            THead.appendChild(Tables[i].rows[0]);
-            Tables[i].insertBefore(THead, Tables[i].children[0]);
-        } else {
-            THead = Tables[i].tHead;
-        }
-
-        // Attach click events to table header
-        for (var rowNum = 0; rowNum < THead.rows.length; rowNum++) {
-            for (var cellNum = 0, colNum = 0; cellNum < THead.rows[rowNum].cells.length; cellNum++) {
-                // Skip headers marked "js-sort-none"
-                if (THead.rows[rowNum].cells[cellNum].className.match(/\bjs-sort-none\b/)) {
-                    continue;
-                }
-                // Define which column the header should invoke sorting for
-                THead.rows[rowNum].cells[cellNum].setAttribute('data-js-sort-colNum', colNum);
-                Handler = sortTable.getClickHandler(Tables[i], colNum);
-                window.addEventListener
-                    ? THead.rows[rowNum].cells[cellNum].addEventListener('click', Handler)
-                    : window.attachEvent && THead.rows[rowNum].cells[cellNum].attachEvent('onclick', Handler);
-                colNum += THead.rows[rowNum].cells[cellNum].colSpan;
-            }
-        }
-
-        // Mark table as processed
-        Tables[i].setAttribute('data-js-sort-table', 'true')
+        // Define which column the header should invoke sorting for
+        THead.rows[rowNum].cells[cellNum].setAttribute(
+          "data-js-sort-colNum",
+          colNum
+        );
+        Handler = sortTable.getClickHandler(Tables[i], colNum);
+        window.addEventListener
+          ? THead.rows[rowNum].cells[cellNum].addEventListener("click", Handler)
+          : window.attachEvent &&
+            THead.rows[rowNum].cells[cellNum].attachEvent("onclick", Handler);
+        colNum += THead.rows[rowNum].cells[cellNum].colSpan;
+      }
     }
 
-    // Add default styles as the first style in head so they can be easily overwritten by user styles
-    var element = document.createElement('style');
-    document.head.insertBefore(element, document.head.childNodes[0]);
-    var sheet = element.sheet;
-    sheet.insertRule('table.js-sort-table.js-sort-asc thead tr > .js-sort-active:not(.js-sort-none):after {content: "\\25b2";font-size: 0.7em;padding-left: 3px;line-height: 0.7em;}', 0);
-    sheet.insertRule('table.js-sort-table.js-sort-desc thead tr > .js-sort-active:not(.js-sort-none):after {content: "\\25bc";font-size: 0.7em;padding-left: 3px;line-height: 0.7em;}', 0);
+    // Mark table as processed
+    Tables[i].setAttribute("data-js-sort-table", "true");
+  }
+
+  // Add default styles as the first style in head so they can be easily overwritten by user styles
+  var element = document.createElement("style");
+  document.head.insertBefore(element, document.head.childNodes[0]);
+  var sheet = element.sheet;
+  sheet.insertRule(
+    'table.js-sort-table.js-sort-asc thead tr > .js-sort-active:not(.js-sort-none):after {content: "\\25b2";font-size: 0.7em;padding-left: 3px;line-height: 0.7em;}',
+    0
+  );
+  sheet.insertRule(
+    'table.js-sort-table.js-sort-desc thead tr > .js-sort-active:not(.js-sort-none):after {content: "\\25bc";font-size: 0.7em;padding-left: 3px;line-height: 0.7em;}',
+    0
+  );
 };
 
 // Run sortTable.init() when the page loads
 window.addEventListener
-    ? window.addEventListener('load', sortTable.init, false)
-    : window.attachEvent && window.attachEvent('onload', sortTable.init)
-    ;
+  ? window.addEventListener("load", sortTable.init, false)
+  : window.attachEvent && window.attachEvent("onload", sortTable.init);
 
 // Shim for IE11's lack of NodeList.prototype.forEach
 if (typeof NodeList.prototype.forEach !== "function") {
-    NodeList.prototype.forEach = Array.prototype.forEach;
+  NodeList.prototype.forEach = Array.prototype.forEach;
 }
