@@ -22,7 +22,7 @@
     <tr>
       <th>Symbol</th>
       <th class="js-sort-number">price</th>
-      <th class="js-sort-number">all</th>
+      <th class="js-sort-number">5d</th>
       <th class="js-sort-number">24h</th>
       <th class="js-sort-number">8c</th>
       <th class="js-sort-number">4c</th>
@@ -30,8 +30,8 @@
       <th class="js-sort-number">1c</th>
 
       <th></th>
-      <th class="js-sort-number">PAll</th>
-      <th class="js-sort-number">P24</th>
+      <th class="js-sort-number">P5d</th>
+      <th class="js-sort-number">P24h</th>
       <th class="js-sort-number">P4h</th>
       <th class="js-sort-number">P8c</th>
       <th class="js-sort-number">P4c</th>
@@ -76,24 +76,24 @@
 
 
         <td
-        <% if (i.indicators.posall < 0) { %> class="red" <% } %>
-        <% if (i.indicators.posall > 0) { %> class="green" <% } %>
+        <% if (i.indicators.posall < 50) { %> class="red" <% } %>
+        <% if (i.indicators.posall > 50) { %> class="green" <% } %>
         ><%= i.indicators.posall %></td>
         <td
-        <% if (i.indicators.pos24h < 0) { %> class="red" <% } %>
-        <% if (i.indicators.pos24h > 0) { %> class="green" <% } %>
+        <% if (i.indicators.pos24h < 50) { %> class="red" <% } %>
+        <% if (i.indicators.pos24h > 50) { %> class="green" <% } %>
         ><%= i.indicators.pos24h %></td>
         <td
-        <% if (i.indicators.pos4h < 0) { %> class="red" <% } %>
-        <% if (i.indicators.pos4h > 0) { %> class="green" <% } %>
+        <% if (i.indicators.pos4h < 50) { %> class="red" <% } %>
+        <% if (i.indicators.pos4h > 50) { %> class="green" <% } %>
         ><%= i.indicators.pos4h %></td>
         <td
-        <% if (i.indicators.pos8c < 0) { %> class="red" <% } %>
-        <% if (i.indicators.pos8c > 0) { %> class="green" <% } %>
+        <% if (i.indicators.pos8c < 50) { %> class="red" <% } %>
+        <% if (i.indicators.pos8c > 50) { %> class="green" <% } %>
         ><%= i.indicators.pos8c %></td>
         <td
-        <% if (i.indicators.pos4c < 0) { %> class="red" <% } %>
-        <% if (i.indicators.pos4c > 0) { %> class="green" <% } %>
+        <% if (i.indicators.pos4c < 50) { %> class="red" <% } %>
+        <% if (i.indicators.pos4c > 50) { %> class="green" <% } %>
         ><%= i.indicators.pos4c %></td>
 
         <td></td>

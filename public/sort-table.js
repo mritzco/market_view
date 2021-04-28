@@ -113,7 +113,7 @@ function sortTable(Table, col, dir) {
     TBody.appendChild(rows[i]);
   }
   // Hack to link
-  linktop(rows.slice(0, 4).map(rw => sortTable.string(rw.cells[0])));
+  linktop(rows.slice(0, 6).map(rw => sortTable.string(rw.cells[0])));
 }
 
 /**
@@ -133,14 +133,14 @@ sortTable.compareRow = function(RowA, RowB) {
 
   lblA = sortTable["string"](RowA.cells[0]).trim();
   lblB = sortTable["string"](RowB.cells[0]).trim();
-  if (lblA === "btc" && lblB === "eth") {
+  if (lblA === "btcusdt" && lblB === "ethusdt") {
     console.log('sorting btc -> eth');
     return -1;
   }
-  if (lblA === "btc" || lblA === "eth") {
+  if (lblA === "btcusdt" || lblA === "ethusdt") {
     return -1;
   }
-  if (lblB === "btc" || lblB === "eth") {
+  if (lblB === "btcusdt" || lblB === "ethusdt") {
     return 1;
   }
   // console.log(valA == valB ? 0 : sortTable.sortDir * (valA > valB ? 1 : -1));
