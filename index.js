@@ -16,6 +16,14 @@ const api = require('./lib/routers/api')
 
 app.use(helmet());
 app.use(cors());
+// app.use(
+// session({
+//     // secret: "process.env.SESSION_SECRET!",
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: { sameSite: 'strict' },
+//   }),
+// );
 app.use(express.static("public"));
 
 // assign the swig engine to .html files

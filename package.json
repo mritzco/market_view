@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "serve": "browser-refresh index.js",
+    "serve": "node index.js",
     "pretest": "eslint 'test/**/*.spec.js'",
     "test": "mocha 'test/**/*.js'   --exit || true",
     "testdebug": "mocha 'test/**/*.js' --debug --inspect  --exit || true",
