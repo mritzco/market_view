@@ -1,5 +1,5 @@
 syntax: glob
-node_modules/*
+**/node_modules/*
 downloads
 
 public/favicon_io\.zip
