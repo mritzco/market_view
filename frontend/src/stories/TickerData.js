@@ -1,0 +1,52 @@
+
+export const data = {
+  symbol: "ATOMUSDT",
+  stats: {
+    low: "29.920",
+    high: "35.761",
+    open: "34.493",
+    close: "32.872",
+    from: 1633837500000,
+    until: 1634287499999,
+    human: {
+      from: "10/10/2021, 10:45:00 AM",
+      until: "10/15/2021, 3:44:59 PM",
+      window: "5 days",
+    },
+    price: {
+      mean: 33.300862,
+      stdev: 1.1671399157581748,
+      range: 5.541999999999998,
+      deviation_mean: 0.41762567916578164,
+    },
+    volume: {
+      mean: 111574.68090000004,
+      stdev: 94846.64332440181,
+      range: 950292.6900000001,
+      deviation_mean: 0.6707261776509605,
+    },
+    trades: {
+      mean: 7746.786,
+      stdev: 5210.261432999692,
+      range: 50487,
+      deviation_mean: 0.7084234922689758,
+    },
+  },
+  indicators: {
+    changeall: { open: 34.551, close: 32.872, change: "-4.86" },
+    change24h: { open: 34.715, close: 32.872, change: "-5.31" },
+    change8c: { open: 33.839, close: 32.872, change: "-2.86" },
+    change4c: { open: 33.88, close: 32.872, change: "-2.98" },
+    change2c: { open: 33.652, close: 32.872, change: "-2.32" },
+    change1c: { open: "32.906", close: "32.872", change: "-0.10" },
+    posall: 51,
+    pos24h: 3,
+    pos4h: 6,
+    pos8c: 7,
+    pos4c: 7,
+    vol8c: { avg: 111574.68090000004, sample: 101070.58625, change: "-9.41" },
+    vol4c: { avg: 111574.68090000004, sample: 133967.72, change: "20.07" },
+    vol2c: { avg: 111574.68090000004, sample: 186374.75, change: "67.04" },
+    vol1c: { avg: 111574.68090000004, sample: "78606.98", change: "31.15" },
+  },
+};
